@@ -1,38 +1,52 @@
-.App {
-  text-align: center;
+.app-wrapper {
+    margin: 0 auto;
+    display: grid;
+
+    width: 100%;
+
+
+    grid-template-areas:
+    "h h h"
+    "n c c";
+
+    grid-template-rows: 50px 2fr;
+    grid-template-columns: 120px 10fr;
+    grid-gap: 10px;
+    background-color: aliceblue;
+    height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.app-wrapper-content {
+    grid-area: c;
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 0 2px black;
+    min-height: 92vh;
+    width: 70%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body::-webkit-scrollbar {
+    width: 12px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+body::-webkit-scrollbar-track {
+    background: white;
 }
 
-.App-link {
-  color: #61dafb;
+body::-webkit-scrollbar-thumb {
+    background-color: darkgray;
+    border-radius: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.AuthContainer {
+    display: inline-block;
+    background: aliceblue;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }

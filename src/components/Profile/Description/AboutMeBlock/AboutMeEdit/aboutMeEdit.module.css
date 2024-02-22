@@ -1,0 +1,10 @@
+.beforeAboutMeContainer {
+    textarea {
+        border-radius: 10px;
+
+    }
+    input {
+        border-radius: 10px;
+        border-color: black;
+    }
+}

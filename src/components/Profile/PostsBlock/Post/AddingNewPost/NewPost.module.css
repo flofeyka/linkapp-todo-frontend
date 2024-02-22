@@ -1,0 +1,51 @@
+.newpost {
+    border-radius: 15px;
+    width: 80%;
+    height: 8vh;
+    font-family: Roboto, Verdana, Tahoma, sans;
+    text-align: center;
+    font-size: 150%;
+    resize: none;
+    min-height: 75px;
+    overflow: hidden;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.posting {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border: none;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Roboto, Verdana, Tahoma, sans;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: white;
+    height: 35px;
+    width: 20%;
+
+}
+
+.posting:hover {
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    background: aliceblue;
+
+}
+
+.newpost {
+    background-color: white;
+}
+

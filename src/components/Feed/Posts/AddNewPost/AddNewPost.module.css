@@ -1,0 +1,38 @@
+.NewPost{
+    border-radius: 15px;
+    width: 50%;
+    height: 8%;
+    font-family: Roboto, Verdana, Tahoma, sans;
+    text-align: center;
+    font-size: 100%;
+    margin-left: 20%;
+    resize: none;
+    background-color: white;
+    min-height: 50px;
+    max-height: 200px;
+}
+
+.addNewPost {
+    transform: translate(600%);
+    border: none;
+    outline: none;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Roboto, Verdana, Tahoma, sans;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin: 5px;
+    background-color: white;
+    width: 10%;
+}
+
+.addNewPost:hover {
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    background: aliceblue;
+
+}

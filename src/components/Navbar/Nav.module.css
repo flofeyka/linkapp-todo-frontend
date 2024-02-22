@@ -1,0 +1,76 @@
+.Nav {
+    grid-area: n;
+    border-radius: 0 30px 30px 0;
+    width: 190px;
+    height: 100%;
+    display: inline-block;
+    position: fixed;
+    bottom: -55px;
+    z-index: 99;
+}
+
+.ProfileBlock {
+    grid-area: b;
+    border: none;
+    outline: none;
+    display: inline-block;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Roboto, Verdana, Tahoma, sans;
+    padding: 5px 15px;
+    border-radius: 20px;
+    color: black;
+    margin: 5px;
+    background: white;
+    height: 50px;
+    width: 94%;
+    font-weight: 600;
+    img {
+        border-radius: 100%;
+    }
+}
+
+
+.NavButton {
+    grid-area: b;
+    border: none;
+    outline: none;
+    display: inline-block;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Roboto, Verdana, Tahoma, sans;
+    padding: 5px 15px;
+    border-radius: 20px;
+    color: black;
+    margin: 5px;
+    background: none;
+    height: 50px;
+    width: 94%;
+    font-weight: 600;
+}
+
+.Nav button img {
+    background-repeat: no-repeat;
+    width: 25px;
+    background-image: url("https://www.pinclipart.com/picdir/big/196-1967537_black-facebook-messenger-notification-icon-clipart.png");
+    margin-right: 13px;
+}
+
+.profileBlock {
+    display: inline-block;
+    vertical-align: 6px;
+}
+
+
+.NavButton:hover {
+    color: black;
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    background: white;
+}
+

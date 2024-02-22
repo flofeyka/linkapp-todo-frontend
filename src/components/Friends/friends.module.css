@@ -1,0 +1,13 @@
+.Friends {
+    font-size: 20px;
+    margin-left: 20px;
+
+}
+.selectedPage {
+    font-weight: bold;
+    color: black;
+}
+
+.Pagination {
+    margin: 5px 10px;
+}

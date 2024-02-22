@@ -1,0 +1,71 @@
+.Friends {
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+    width: 200px;
+}
+
+.logo {
+    display: inline-block;
+    min-height: 30px;
+    width: 110px;
+    min-width: 20px;
+    height: 110px;
+    border-radius: 50px;
+}
+
+.logoContainer {
+    width: auto;
+}
+
+.subscribe {
+    border: none;
+    outline: none;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 110px;
+    height: 40px;
+    font-size: 13px;
+    font-family: Roboto, Verdana, Tahoma, sans;
+    padding: 5px 10px;
+    background-color: white;
+}
+.subscribe:hover {
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    background: aliceblue;
+
+}
+
+.description {
+    display: inline-block;
+}
+
+.descriptionContainer {
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.name {
+    margin-top: -30px;
+    font-weight: 700;
+    font-size: 23px;
+    display: block;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+}
+
+.status {
+    width: 200px;
+    margin-top: 9px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

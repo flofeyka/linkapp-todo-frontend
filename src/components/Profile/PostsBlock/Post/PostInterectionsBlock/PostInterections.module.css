@@ -1,0 +1,19 @@
+.interectionsBlock {
+    button {
+        margin-left: 5px;
+        border: none;
+        outline: none;
+        font-family: Roboto, Verdana, Tahoma, sans;
+        background: 0;
+        font-size: 15px;
+        border-radius: 10px;
+        width: 80px;
+    }
+
+    button:hover {
+        transition: all .3s linear;
+        -webkit-transition: all .3s linear;
+        -moz-transition: all .3s linear;
+        background: white;
+    }
+}

@@ -1,0 +1,45 @@
+.fullName {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.commentBlock {
+    display: inline-block;
+}
+
+.imageBlock {
+    display: inline-block;
+}
+
+.answerImg {
+    width: 70px;
+    height: 70px;
+    justify-content: center;
+    vertical-align: 100%;
+    margin-left: 20px;
+    border-radius: 100%;
+}
+
+.answerItem {
+    margin-bottom: 5px;
+    border-radius: 10px;
+    top: -15px;
+}
+
+.answerItem:hover {
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    background-color: aliceblue;
+}
+
+.answerMessage {
+    width: 90%;
+    overflow: initial;
+}
+
+
+.changesBlock {
+    float: right;
+    margin-bottom: -15px;
+}

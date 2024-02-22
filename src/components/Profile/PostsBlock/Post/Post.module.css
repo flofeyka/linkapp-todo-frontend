@@ -1,0 +1,71 @@
+.commentDetails {
+    flex-basis: 100px;
+    flex-grow: 1;
+}
+
+.usersPhoto {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+
+.logs {
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.container {
+    font-size: 18px;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+}
+
+.NameBlock {
+    border: none;
+    outline: none;
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+}
+
+.logs:hover {
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    background: aliceblue;
+}
+
+.ChangesBlock {
+    width: 10%;
+    height: 10px;
+}
+
+button {
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    font-family: Roboto, Verdana, Tahoma, sans;
+    background: 0;
+    font-size: 15px;
+    border-radius: 10px;
+    width: 80px;
+}
+button:hover {
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    background: white;
+}
+
+.commentMessage {
+    max-width: 28vw;
+    overflow-wrap: break-word;
+    position: sticky;
+}
