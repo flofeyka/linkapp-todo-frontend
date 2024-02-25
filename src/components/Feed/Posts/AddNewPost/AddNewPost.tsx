@@ -12,7 +12,7 @@ const PostItemReduxForm = reduxForm({form: "PostMessage"})(function NewFeedPostF
     return <form onSubmit={props.handleSubmit}>
         <div>
             <Field component={Textarea} name={"NewPostMessage"} className={styles.NewPost}
-                   placeholder='Write something new...'/>
+                   placeholder='Что у вас нового?'/>
         </div>
         <div>
             <button className={styles.addNewPost}>

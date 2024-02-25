@@ -18,7 +18,9 @@ function Posts(props: Props) {
                                                        currentFullName={props.currentFullName} currentUserId={props.currentUserId} currentProfileImage={props.currentProfileImage.small}/>)
     return <div>
         <AddingNewPost currentUserId={props.currentUserId} currentFullName={props.currentFullName} currentProfileImage={props.currentProfileImage.large}/>
-        {PostElem}
+        <div>
+            {PostElem}
+        </div>
     </div>
 
 }

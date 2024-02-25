@@ -1,26 +1,23 @@
 .answerBlock {
-    display: inline-flex;
+    display: block;
     position: relative;
     right: -50px;
-    top: -20px;
 }
 
 .inputAnswerImg {
-    max-width: 45px;
-    max-height: 45px;
+    max-width: 40px;
+    max-height: 40px;
     border-radius: 100%;
 }
 
 .inputAnswer {
     font-size: 25px;
-    margin-top: -6px;
     border-radius: 10px;
 }
 
 .answerButton {
     width: 50px;
     height: 40px;
-    margin-top: 4px;
     border-radius: 10px;
     border: none;
     background: none;

@@ -71,17 +71,17 @@ function PostItem({post, ...props}: any) {
 
             </div>
         </div>
-        {post.answers.map((answer: any) => {
-            return <AnswerItem setAnswerMode={(editMode: boolean) => setAnswerMode(editMode)} answerMode={answerMode}
-                               postId={post.id}
-                               answer={answer} currentUserId={props.currentUserId}/>
-        })}
+        <div>
+            {post.answers.map((answer: any) => {
+                return <AnswerItem setAnswerMode={(editMode: boolean) => setAnswerMode(editMode)} answerMode={answerMode}
+                                   postId={post.id}
+                                   answer={answer} currentUserId={props.currentUserId}/>
+            })}
+        </div>
         <div>
             {answerMode ?
                 <AddingNewAnswer currentUserId={props.currentUserId} currentProfileImage={props.currentProfileImage}
-                                 currentFullName={props.currentFullName} postId={post.id}
-
-                /> : null}
+                                 currentFullName={props.currentFullName} postId={post.id}/> : null}
         </div>
     </div>
 }

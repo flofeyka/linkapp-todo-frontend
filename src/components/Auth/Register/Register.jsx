@@ -4,27 +4,22 @@ import {NavLink} from 'react-router-dom';
 import {Field, reduxForm} from "redux-form";
 import {useDispatch} from "react-redux";
 import {Input} from "../../common/FormsControl/FormsControl";
-import {required} from "../../../utils/validators/validators";
 import {RegisterConfirm} from "../../../redux/AuthReducer";
 
 const RegisterReduxForm = reduxForm({form: "register"})((props) => {
     return <form onSubmit={props.RegisterSubmit}>
         <div className={styles.RegisterContainer}>
             <div>
-                <Field component={Input} name={"email"} type="email" placeholder='Электронная почта'
-                       validate={[required]}/>
+                <Field component={Input} name={"email"} type="email" placeholder='Электронная почта'/>
             </div>
             <div>
-                <Field component={Input} name={"login"} type="text" placeholder='Логин'
-                       validate={[required]}/>
+                <Field component={Input} name={"login"} type="text" placeholder='Логин'/>
             </div>
             <div>
-                <Field component={Input} name={"password"} type="password" placeholder='Пароль'
-                       validate={[required]}/>
+                <Field component={Input} name={"password"} type="password" placeholder='Пароль'/>
             </div>
             <div>
-                <Field component={Input} name={"repeatPassword"} type="password" placeholder='Повторите пароль'
-                       validate={[required]}/>
+                <Field component={Input} name={"repeatPassword"} type="password" placeholder='Повторите пароль'/>
             </div>
             <div>
                 <button>Зарегистрироваться</button>

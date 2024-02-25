@@ -3,6 +3,7 @@ import styles from "./NewPost.module.css";
 import {addPost} from "../../../../../redux/ProfileReducer";
 import {useFormik} from "formik";
 import {useAppDispatch} from "../../../../../redux/ReduxStore";
+import * as Yup from "yup";
 
 
 function AddingNewPost(props: any) {
@@ -12,10 +13,15 @@ function AddingNewPost(props: any) {
         initialValues: {
             NewPostMessage: ""
         },
+        validationSchema: Yup.object().shape({
+            NewPostMessage: Yup.string().trim().required()
+        }),
         onSubmit: values => {
-            dispatch(addPost({userId: props.currentUserId, fullName: props.currentFullName,
+            dispatch(addPost({
+                userId: props.currentUserId, fullName: props.currentFullName,
                 currentProfileImage: props.currentProfileImage, NewPostMessage: values.NewPostMessage,
-                likesCount: 0, isLiked: false}));
+                likesCount: 0, isLiked: false
+            }));
         }
     });
 
