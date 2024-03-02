@@ -1,19 +1,26 @@
 .NewPost{
-    border-radius: 15px;
-    width: 50%;
-    height: 8%;
+    border-radius: 10px;
     font-family: Roboto, Verdana, Tahoma, sans;
     text-align: center;
     font-size: 100%;
-    margin-left: 20%;
     resize: none;
     background-color: white;
-    min-height: 50px;
-    max-height: 200px;
+    height: 30px;
+    min-height: 30px;
+    max-height: 100px;
+    min-width: 150px;
+    width: 455px;
+    max-width: 700px;
+}
+
+.NewPostBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .addNewPost {
-    transform: translate(600%);
+    width: auto;
     border: none;
     outline: none;
     display: inline-block;
@@ -26,7 +33,7 @@
     border-radius: 10px;
     margin: 5px;
     background-color: white;
-    width: 10%;
+    height: 35px;
 }
 
 .addNewPost:hover {

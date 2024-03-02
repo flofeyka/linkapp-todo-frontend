@@ -16,8 +16,10 @@
 }
 
 .AuthText {
-    font-size: 70px;
-    margin-left: 30%;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: 600;
     margin-top: 25px;
 }

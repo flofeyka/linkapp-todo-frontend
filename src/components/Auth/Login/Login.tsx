@@ -44,7 +44,7 @@ function LoginForm(props: any) {
                 <div className={styles.checkBoxContainer}>
                     <input name={"rememberMe"} className={styles.checkBoxInput}
                            type={"checkbox"} onChange={formik.handleChange}/>
-                    Remember me
+                    Запомнить вход
                 </div>
                 <div>
                     {props.captchaUrl != null && <div className={styles.captchaContainer}>
@@ -54,9 +54,9 @@ function LoginForm(props: any) {
                     </div>
                     }
                     <button>
-                        Login
+                        Войти
                     </button>
-                    <div className={styles.AnAccount}>Do not have an account? <NavLink to={"/register"}>Sign
+                    <div className={styles.AnAccount}>Нет аккаунта? <NavLink to={"/register"}>Sign
                         in</NavLink></div>
                 </div>
             </div>

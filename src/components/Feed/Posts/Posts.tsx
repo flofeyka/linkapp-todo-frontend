@@ -1,41 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AddNewPost from './AddNewPost/AddNewPost';
-import user from "../../../assets/Profile/usersProfileIcon.png"
 import styles from "./Posts.module.css"
-import {NavLink} from "react-router-dom";
-import {FeedPostItemType} from "../../../types/types";
+import { FeedPostItemType } from "../../../types/types";
+import OpenPostBlock from './PostItem/OpenPost/OpenPostBlock';
+import PostItem from './PostItem/PostItem';
 
 type Props = {
     FeedPosts: any
 }
 
 function Posts(props: Props) {
+    debugger;
+    const [openPost, setOpenPost] = useState<boolean>(false);
     return (<div>
         <div>
-            <AddNewPost/>
+            <AddNewPost />
         </div>
+        {openPost && <OpenPostBlock setOpenPost={(openMode: boolean) => {
+            setOpenPost(openMode)
+        }} />}
         <div className={styles.PostContainer}>
-            {props.FeedPosts.map((p: FeedPostItemType) => {
-                return (<div className={styles.PostBox}>
-                            <div>
-                                <img src={p.usersPhoto || user} alt="" className={styles.UsersPhoto}/>
-                            </div>
-                            <div className={styles.DescriptionBox}>
-                                <div>
-                                    <NavLink to={`/user/${p.userId}`}>
-                                        <div className={styles.UsersName}>
-                                            {p.fullName}
-                                            <span>
-                                                <button className={styles.details}>...</button>
-                                            </span>
-                                        </div>
-                                    </NavLink>
-                                </div>
-                                <div className={styles.UsersMessage}>
-                                    {p.postMessage}
-                                </div>
-                            </div>
-                </div>)
+            {props.FeedPosts.map((post: FeedPostItemType) => {
+                return <PostItem post={post} setOpenPost={(openPost: boolean) => {setOpenPost(openPost)}}/>
             })
             }
         </div>

@@ -4,23 +4,26 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 15px;
 }
 
 .DescriptionContainer {
     flex-basis: 250px;
-    flex-grow: 1;
+    flex-grow: 2;
+    margin-left: 15px;
+    margin-top: -5px;
 }
 
 .Logo {
-    display: inline-block;
-    height: 150px;
     width: 150px;
 }
 
 .Logo img {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     border-radius: 100px;
 }
 
@@ -29,11 +32,13 @@
     font-weight: bold;
     display: inline;
     vertical-align: top;
+    margin-bottom: 10px;
 }
 
 .status {
     font-size: 20px;
     width: 100%;
+    margin-top: 5px
 }
 
 .inputStatus {
@@ -41,5 +46,22 @@
     height: 25px;
     border-radius: 15px;
     width: 100%;
+}
+
+.desc button {
+    width: auto;
+    border: none;
+    background: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    margin: 5px;
+}
+
+.desc button:hover {
+    transition: all .3s linear;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    background: aliceblue;
 }
 

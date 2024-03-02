@@ -1,7 +1,8 @@
 .beforeAboutMeContainer {
     textarea {
         border-radius: 10px;
-
+        height: 100px;
+        width: 450px;
     }
     input {
         border-radius: 10px;

@@ -1,16 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {FC, useEffect} from 'react'
 import styles from "./friends.module.css";
 import {useSelector} from "react-redux";
 import {getUsers, setCurrentPage} from "../../redux/FriendsReducer";
 import FriendsItem from "./FriendsItem/FriendsItem";
 import SearchBoxFriends from "./SearchFriends/SearchBox";
-import {
-    getAllUsers,
-    getCurrentPage,
-    getPageSize,
-    getProgressInFollowing,
-    getTotalUsersCount
-} from "../../redux/selectors/FriendsSelector";
 import {Pagination} from "antd";
 import {RootState, useAppDispatch} from "../../redux/ReduxStore";
 import {friendsItemType} from "../../types/types";
@@ -22,21 +15,21 @@ function Friends() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getUsers(currentPage, pageSize));
-    }, [dispatch, currentPage, pageSize]);
+        dispatch(getUsers(+currentPage));
+    }, [dispatch, currentPage]);
 
     return (
         <div className={styles.Friends}>
             <div className={styles.Pagination}>
-                <Pagination defaultCurrent={1} total={totalUsersCount} onChange={(pageNumber) => {
+                <Pagination defaultCurrent={1} total={+totalUsersCount} onChange={(pageNumber) => {
                     dispatch(setCurrentPage(pageNumber));
-                }} current={currentPage} pageSize={pageSize} showSizeChanger={false}/>
+                }} current={+currentPage} pageSize={+pageSize} showSizeChanger={false}/>
             </div>
             <div>
                 <SearchBoxFriends />
             </div>
             <div>
-                {users.map((user: any) => {
+                {users.map((user: friendsItemType) => {
                     return <FriendsItem followingInProgress={followingInProgress} user={user}/>
                 })}
             </div>

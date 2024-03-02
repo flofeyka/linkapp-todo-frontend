@@ -3,8 +3,7 @@ import profileReducer, {
     acceptCommentChanges,
     addPost,
     answerComment, deleteAnswer,
-    deleteComment, setFollow, setLike, setLikeAnswer, setStatus, setUserProfile, ToggleIsFollowingProgress
-} from "../ProfileReducer";
+    deleteComment, setLike, setLikeAnswer} from "../ProfileReducer";
 import ProfileReducer from "../ProfileReducer";
 import {profileDataType, profileType} from "../../types/types";
 
@@ -21,8 +20,8 @@ let state : profileType = {
         id: 1,
         userId: 2532,
         fullName: "Test Name #1",
-        usersImage: null,
-        commentMessage: "Test Message #1",
+        usersPhoto: null,
+        postMessage: "Test Message #1",
         likesCount: 5313,
         isLiked: true,
         answers: [{
@@ -73,7 +72,7 @@ it("Post should be edited", () => {
     let action = acceptCommentChanges({id: 1, newMessage: "EDIT TEST"});
 
     let newState = ProfileReducer(state, action);
-    expect(newState.PostItem[0].commentMessage).toBe("EDIT TEST");
+    expect(newState.PostItem[0].postMessage).toBe("EDIT TEST");
 });
 
 it("Post shouldn't be liked", () => {
@@ -125,62 +124,3 @@ it("The answer should be liked", () => {
 
     expect(newState.PostItem[0].answers[0].isLiked).toBe(true);
 });
-
-it("Status should be changed", () => {
-    let action = setStatus("Testing Status");
-    let newState = profileReducer(state, action);
-
-    expect(newState.status).toBe("Testing Status");
-});
-
-it("User should be followed", () => {
-    let action = setFollow(true);
-    let newState = profileReducer(state, action);
-
-    expect(newState.isFollowing).toBe(true);
-});
-
-it("Profile should be uploaded", () => {
-    let action = setUserProfile({
-        userId: 1,
-        lookingForAJob: true,
-        lookingForAJobDescription: "I am looking for a job",
-        fullName: "Test Name",
-        contacts: {
-            github: null,
-            vk: null,
-            facebook: null,
-            instagram: null,
-            twitter: null,
-            website: "https://social-network.samuraijs.com/docs",
-            youtube: "youtube.com/@flofeyka",
-            mainLink: null
-        }
-    });
-
-    let newState = profileReducer(state, action);
-    expect(newState.profileData).toStrictEqual({
-        userId: 1,
-        lookingForAJob: true,
-        lookingForAJobDescription: "I am looking for a job",
-        fullName: "Test Name",
-        contacts: {
-            github: null,
-            vk: null,
-            facebook: null,
-            instagram: null,
-            twitter: null,
-            website: "https://social-network.samuraijs.com/docs",
-            youtube: "youtube.com/@flofeyka",
-            mainLink: null
-        }
-    });
-});
-it("Following progress should be true", () => {
-    let action = ToggleIsFollowingProgress(true);
-
-    let newState = profileReducer(state, action);
-    expect(newState.followingInProgress).toBe(true);
-});
-
-

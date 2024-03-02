@@ -1,5 +1,5 @@
 import styles from "./AboutMe.module.css";
-import React, {useState} from "react";
+import {useState} from "react";
 import closer from "./../../../../assets/Closer.png"
 import {NavLink} from "react-router-dom";
 import AboutMeEdit from "./AboutMeEdit/AboutMeEdit";
@@ -33,7 +33,7 @@ function AboutMeBlock({LinkedUserId, contacts, ...props}: Props) {
         <div>
             <button className={styles.aboutMeButton} onClick={() => {
                 !deploy ? setDeploy(true) : setDeploy(false);
-            }}>About me
+            }}>Основные данные
             </button>
             {deploy && <div className={styles.aboutMeContainer}>
                 <div className={styles.aboutMe}>
@@ -42,35 +42,35 @@ function AboutMeBlock({LinkedUserId, contacts, ...props}: Props) {
                             setDeploy(false);
                             setEditMode(false);
                         }}>
-                            <img className={styles.closer} src={closer} alt="Close about me menu"/>
+                            <img className={styles.closer} src={closer} alt=""/>
                         </button>
                     </div>
                     {!editMode && <div className={styles.Description}>
                         <div>
-                            <h3>Main Data</h3>
-                            <li><b>Full Name</b>: {props.fullName}</li>
-                            <li><b>Unique user link</b>: <NavLink
+                            <h3>Основные данные</h3>
+                            <li><b>Имя</b>: {props.fullName}</li>
+                            <li><b>Пользовательская ссылка</b>: <NavLink
                                 to={`/user/${LinkedUserId}`}>linkapp.com/user/{LinkedUserId}</NavLink></li>
-                            <li><b>Unique user id</b>: {LinkedUserId}</li>
-                            <li><b>About me</b>: {props.aboutMe}</li>
+                            <li><b>Уникальный айди</b>: {LinkedUserId}</li>
+                            <li><b>Обо мне</b>: <span className={styles.aboutMeText}>{props.aboutMe}</span></li>
                         </div>
                         {!props.lookingForAJob || <div>
-                            <h3>I am looking for a job.</h3>
+                            <h3>Я ищу работу.</h3>
                             <li>{props.lookingForAJobDescription}</li>
                         </div>
                         }
                         <div className={styles.contacts}>
-                            {!Object.keys(contacts).every(item => item === null || "") && <div className={styles.otherSocial}>
-                                <h3>Other social</h3>
+                            {Object.keys(contacts).every(item => !item) && <div className={styles.otherSocial}>
+                                <h3>Другие социальные сети</h3>
                                 {Object.keys(contacts).map(item => {
-                                    if (contacts[item] != null) return <li key={item}><b>{item}</b>: <a
+                                    if (contacts[item] != null ) return <li key={item}><b>{item}</b>: <a
                                         href={"https://" + contacts[item]}>{contacts[item]}</a></li>
                                     return null;
                             })}
                             </div>
                             }
                         </div>
-                        {props.currentUserId == LinkedUserId && <span>
+                        {props.currentUserId === LinkedUserId && <span>
                                 <button onClick={() => {
                                     setEditMode(true)
                                 }}>Редактировать

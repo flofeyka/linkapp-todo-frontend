@@ -1,88 +1,61 @@
-import React, {memo, useState} from 'react'
+import React, { memo, useState } from 'react'
 import styles from './Post.module.css'
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import AnswerItem from "./PostInterectionsBlock/Answers/AnswerItem";
 import AddingNewAnswer from "./PostInterectionsBlock/Answers/AddingNewAnswer/AddingNewAnswer";
 import PostInterections from "./PostInterectionsBlock/PostInterections";
-import {useDispatch} from "react-redux";
-import {acceptCommentChanges, deleteComment} from "../../../../redux/ProfileReducer";
+import { useDispatch } from "react-redux";
+import { acceptCommentChanges, deleteComment } from "../../../../redux/ProfileReducer";
 import user from "../../../../assets/Profile/usersProfileIcon.png"
-
-function PostItem({post, ...props}: any) {
-    let [answerMode, setAnswerMode] = useState(false);
-    let [editMode, setEditMode] = useState(false);
-    let [newMessage, setNewMessage] = useState(post.commentMessage);
+import details from "../../../../assets/AdditionalyPhoto.png"
+import { useAppDispatch } from '../../../../redux/ReduxStore';
 
 
-    const dispatch = useDispatch();
+function PostItem({ post, setOpenPost, ...props }: any) {
+    const [answerMode, setAnswerMode] = useState<boolean>(false);
+    const [editMode, setEditMode] = useState<boolean>(false);
+    const [newMessage, setNewMessage] = useState<string | null>(post.commentMessage);
 
     return <div key={post.id}>
-        <div className={styles.logs}>
-            <div className={styles.UsersPhotoBlock}>
-                <img className={styles.usersPhoto} src={post.usersImage || user} alt={""}/>
+        <div className={styles.PostBox}>
+            <div>
+                <img src={post.usersPhoto || user} alt="" className={styles.UsersPhoto} />
             </div>
-            <div className={styles.commentDetails}>
-                <div className={styles.container}>
-                    <div className={styles.name}>
-                        <NavLink to={"/user/" + post.userId}>
-                            <span className={styles.NameBlock}>{post.fullName}</span>
-                        </NavLink>
-                        <div className={styles.ChangesBlock}>
-                            {props.currentUserId === post.userId ? <div>
-                            </div> : null}
+            <div className={styles.DescriptionBox}>
+                <div>
+                    <NavLink to={`/user/${post.userId}`}>
+                        <div className={styles.UsersName}>
+                            {post.fullName}
                         </div>
-                    </div>
-                    {editMode && props.currentUserId === post.userId ?
-                        <div>
-                            <input value={newMessage} autoFocus={true} onChange={(event) => {
-                                setNewMessage(event.target.value);
-                            }}/>
-                            <button onClick={() => {
-                                dispatch(acceptCommentChanges({id: post.id, newMessage: newMessage}));
-                                setEditMode(false);
-                            }}>Применить
-                            </button>
-                        </div> :
-                        <div className={styles.commentMessage}>
-                            {post.commentMessage}
-                        </div>}
-                    <div>
-                        <PostInterections setAnswerMode={(answerMode: boolean) => {
-                            setAnswerMode(answerMode)
-                        }}
-                                          answerMode={answerMode} likesCount={post.likesCount} postId={post.id}/>
-                    </div>
+                    </NavLink>
+                    <span className={styles.detailsBlock}>
+                        <button className={styles.details}><img src={details} /></button>
+                    </span>
                 </div>
-
-            </div>
-            <div className={styles.ChangesBlock}>
-                {props.currentUserId === post.userId ? <div>
-                    <span>
-                        <button onClick={() => {
-                            setEditMode(editMode ? false : true)
-                        }}>Изменить</button>
-                    </span>
-                    <span>
-                        <button onClick={() => {
-                            dispatch(deleteComment(post.id))
-                        }}>Удалить</button>
-                    </span>
-                </div> : null}
-
+                <div className={styles.UsersMessage} onClick={() => {
+                    setOpenPost(true);
+                }}>
+                    {post.postMessage}
+                </div>
+                <PostInterections postId={post.id} likesCount={post.likesCount} answerMode={answerMode} setAnswerMode={(answerMode: boolean) => {
+                    setAnswerMode(answerMode)
+                }} />
             </div>
         </div>
         <div>
+        <div>
             {post.answers.map((answer: any) => {
                 return <AnswerItem setAnswerMode={(editMode: boolean) => setAnswerMode(editMode)} answerMode={answerMode}
-                                   postId={post.id}
-                                   answer={answer} currentUserId={props.currentUserId}/>
+                    postId={post.id}
+                    answer={answer} currentUserId={props.currentUserId} />
             })}
         </div>
         <div>
             {answerMode ?
                 <AddingNewAnswer currentUserId={props.currentUserId} currentProfileImage={props.currentProfileImage}
-                                 currentFullName={props.currentFullName} postId={post.id}/> : null}
+                    currentFullName={props.currentFullName} postId={post.id} /> : null}
         </div>
+    </div>
     </div>
 }
 

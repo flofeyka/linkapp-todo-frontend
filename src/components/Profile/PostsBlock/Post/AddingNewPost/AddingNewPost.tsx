@@ -22,19 +22,20 @@ function AddingNewPost(props: any) {
                 currentProfileImage: props.currentProfileImage, NewPostMessage: values.NewPostMessage,
                 likesCount: 0, isLiked: false
             }));
+            values.NewPostMessage = "";
         }
     });
 
 
-    return <form onSubmit={formik.handleSubmit}>
-        <div>
-            <input name={"NewPostMessage"} className={styles.newpost} placeholder={"Что у вас нового?"}
+    return <form onSubmit={formik.handleSubmit} className={styles.newPostContainer}>
+        <span>
+            <textarea name={"NewPostMessage"} className={styles.newpost} placeholder={"Что у вас нового?"}
                    onChange={formik.handleChange}
                    value={formik.values.NewPostMessage}/>
-        </div>
-        <div>
+        </span>
+        <span>
             <button className={styles.posting}>Отправить</button>
-        </div>
+        </span>
     </form>
 }
 

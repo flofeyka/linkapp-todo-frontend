@@ -1,49 +1,7 @@
 .PostContainer {
-    margin-left: auto;
-    margin-right: auto;
-    display: table-cell;
-}
-
-.PostBox {
-    margin-bottom: 10px;
-    font-size: 15px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    border: 1px black solid;
-    padding: 10px;
-    border-radius: 10px;
-    width: 500px;
-    min-height: 300px;
-    height: 100%;
-}
-
-.DescriptionBox {
-    margin-left: 15px;
-    flex-basis: 250px;
-    flex-grow: 1;
-}
-.UsersName {
-    font-weight: bold;
-    font-size: 25px;
-    display: inline-block;
-    color: black;
-
-}
-
-.UsersMessage {
-    margin-top: 10px;
-    font-size: 17px;
-}
-
-.UsersPhoto {
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-}
-
-.details {
-    float: right;
+    flex-direction: column;
+    align-items: center;
 }
 
 .button:hover {

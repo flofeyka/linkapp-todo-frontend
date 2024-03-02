@@ -1,12 +1,11 @@
-import React, {memo, useState} from "react";
+import { memo, useState } from "react";
 import styles from "./Descriptions.module.css"
 import user from "../../../assets/Profile/usersProfileIcon.png"
-import {useDispatch} from "react-redux";
-import {setStatus, setStatusProfile} from "../../../redux/ProfileReducer";
+import { setStatusProfile } from "../../../redux/ProfileReducer";
 import FollowBlock from "./FollowBlock/Follow";
 import AboutMeBlock from "./AboutMeBlock/AboutMe";
-import {contactsType, profileDataType} from "../../../types/types";
-import {useAppDispatch} from "../../../redux/ReduxStore";
+import { contactsType, profileDataType } from "../../../types/types";
+import { useAppDispatch } from "../../../redux/ReduxStore";
 
 type Props = {
     currentUsersPhoto: {
@@ -26,16 +25,19 @@ type Props = {
 }
 
 function Descriptions(props: Props) {
-    let [editMode, setEditMode] = useState<boolean>(false);
+    const [editMode, setEditMode] = useState<boolean>(false);
+    const [status, setStatus] = useState<string>(props.profileStatus);
 
     const dispatch = useAppDispatch();
 
     return <div className={styles.desc}>
         <div className={styles.Logo}>
-            <img src={props.currentUsersPhoto.large || user} alt=""/>
-            {props.LinkedUserId != props.currentUserId ? <FollowBlock
-                LinkedUserId={props.LinkedUserId} isFollowing={props.isFollowing}
-                followingInProgress={props.followingInProgress}/> : null}
+            <img src={props.currentUsersPhoto.large || user} alt="" />
+            <span>
+                {props.LinkedUserId !== props.currentUserId ? <FollowBlock
+                    LinkedUserId={props.LinkedUserId} isFollowing={props.isFollowing}
+                    followingInProgress={props.followingInProgress} /> : null}
+            </span>
         </div>
         <div className={styles.DescriptionContainer}>
             <div className={styles.name}>
@@ -43,25 +45,25 @@ function Descriptions(props: Props) {
             </div>
             <span>
                 {!editMode ? <div onDoubleClick={() => {
-                    setEditMode(props.LinkedUserId == props.currentUserId)
+                    setEditMode(props.LinkedUserId === props.currentUserId)
                 }} className={styles.status}>
                     {props.profileStatus}
                 </div> : <div>
                     <input className={styles.inputStatus}
-                           onChange={(event) => {
-                               dispatch(setStatus(event.target.value));
-                           }} autoFocus={true} onBlur={() => {
-                               setEditMode(editMode = false);
-                               dispatch(setStatusProfile(props.profileStatus));
-                           }} value={props.profileStatus}>
+                        onChange={(event) => {
+                            setStatus(event.target.value);
+                        }} autoFocus={true} onBlur={() => {
+                            setEditMode(false);
+                            dispatch(setStatusProfile(props.profileStatus));
+                        }} value={status}>
                     </input>
                 </div>}
             </span>
             <span>
                 <AboutMeBlock profileData={props.profileData} fullName={props.fullName} LinkedUserId={props.LinkedUserId} contacts={props.contacts}
-                              lookingForAJob={props.lookingForAJob}
-                              lookingForAJobDescription={props.lookingForAJobDescription} currentUserId={props.currentUserId}
-                              aboutMe={props.aboutMe}/>
+                    lookingForAJob={props.lookingForAJob}
+                    lookingForAJobDescription={props.lookingForAJobDescription} currentUserId={props.currentUserId}
+                    aboutMe={props.aboutMe} />
             </span>
         </div>
     </div>

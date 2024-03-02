@@ -19,15 +19,16 @@
 
 .app-wrapper-content {
     grid-area: c;
-    background-color: white;
     border-radius: 10px 10px 0 0;
-    box-shadow: 0 0 2px black;
     min-height: 92vh;
-    width: 70%;
-    display: block;
+    width: 60%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 4px;
+    display: block;
+}
+
+.app-wrapper-with-wallpaper {
+    border-radius: 10px;
 }
 
 body::-webkit-scrollbar {
@@ -44,9 +45,11 @@ body::-webkit-scrollbar-thumb {
 }
 
 .AuthContainer {
-    display: inline-block;
+    display: flex;
     background: aliceblue;
     position: fixed;
     width: 100%;
     height: 100%;
+    justify-content: center;
+    align-items: center;
 }

@@ -36,8 +36,8 @@ export type postItemType = {
     id: number
     userId: number
     fullName: string
-    usersImage: string | null
-    commentMessage: string
+    usersPhoto: string | null
+    postMessage: string
     likesCount: number
     isLiked: boolean
     answers: Array<answersType>

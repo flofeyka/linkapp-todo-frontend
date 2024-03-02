@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {editProfile} from '../../../../../redux/ProfileReducer';
 import {useAppDispatch} from "../../../../../redux/ReduxStore";
 import {contactsType, profileDataType} from "../../../../../types/types";
 import {useFormik} from "formik";
-import styles from "./aboutMeEdit.module.css"
+import styles from "./aboutMeEdit.module.css";
+
+function ContactsForm({formik, ...props}: any){
+    return <span>
+        <h4>Другие социальные сети</h4>
+        {Object.keys(props.contacts).map((item: any) => {
+            return <li key={item}><b>{item}</b>: <input placeholder={item} id={item} name={`contacts.${item}`}
+                                                    value={formik.values.contacts[item]}
+                                                    onChange={formik.handleChange}/></li>
+    })}
+    </span>
+}
 
 const AboutMeForm = (props: any) => {
+    const [editSocialMode, setEditSocialMode] = useState(false) 
+
+
     let formik = useFormik({
         initialValues: {
             ...props.profileData,
-            ...props.contacts
         },
         onSubmit: values => {
             props.changesSubmit(values)
@@ -19,31 +32,28 @@ const AboutMeForm = (props: any) => {
     console.log(props.profileData.contacts)
     return <form onSubmit={formik.handleSubmit}>
         <h4>Основные данные</h4>
-        <li><b>Full Name</b>: <input name={"fullName"} id={"fullName"} placeholder={"Имя"}
+        <li><b>Имя</b>: <input name={"fullName"} id={"fullName"} placeholder={"Имя"}
                                      onChange={formik.handleChange}
                                      value={formik.values.fullName}/></li>
-        <li><b>About me</b>: <textarea name="aboutMe" id={"aboutMe"} placeholder="Обо мне"
+        <li><b>Обо мне</b>: <input name="aboutMe" id={"aboutMe"} placeholder="Обо мне"
                                        onChange={formik.handleChange}
                                        value={formik.values.aboutMe}/></li>
         <h4>Ищу работу: </h4>
-        <li>
+        <div>
             <input name={"lookingForAJob"} type={"checkbox"} onChange={formik.handleChange}
                    checked={formik.values.lookingForAJob}/>Я ищу работу
-        </li>
+        </div>
         <div>
             <textarea name={"lookingForAJobDescription"} placeholder={"Описание"} onChange={formik.handleChange}
                       value={formik.values.lookingForAJobDescription}/>
         </div>
-
-        <h4>Other social</h4>
-        {Object.keys(props.contacts).map((item: any) => {
-            return <li key={item}><b>{item}</b>: <input placeholder={item} id={item} name={`contacts.${item}`}
-                                                        value={formik.values.contacts[item]}
-                                                        onChange={formik.handleChange}/></li>
-        })}
-        <div>
+            {editSocialMode ? <span><ContactsForm formik={formik} contacts={props.contacts}/><button onClick={() => {
+                setEditSocialMode(false);
+            }}>Свернуть</button></span>
+            :<div><h4>Другие социальные сети: <button onClick={() => {setEditSocialMode(true)}}>Развернуть</button></h4></div>}
+        <span>
             <button>Принять</button>
-        </div>
+        </span>
     </form>
 }
 
@@ -67,9 +77,9 @@ function AboutMeEdit({editMode, setEditMode, profileData, ...props}: Props) {
         {editMode && <div>
             <AboutMeForm profileData={profileData} changesSubmit={changesSubmit} contacts={profileData.contacts}/>
         </div>}
-        {props.currentUserId == props.LinkedUserId && !editMode && <button onClick={() => {
+        {props.currentUserId === props.LinkedUserId && !editMode && <button onClick={() => {
             setEditMode(true);
-        }}>Edit</button>}
+        }}>Редактировать</button>}
     </div>
 }
 

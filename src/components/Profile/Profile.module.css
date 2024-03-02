@@ -25,6 +25,10 @@
     width: 100%;
     max-width: 100%;
 }
-.content div {
-    margin: 15px;
+
+.postsBlock {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    
 }

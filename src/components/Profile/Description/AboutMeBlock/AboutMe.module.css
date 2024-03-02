@@ -14,6 +14,11 @@
     }
 }
 
+.AboutMeBlock div {
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
 .otherSocial {
     display: table-cell;
 }
@@ -40,6 +45,7 @@
     position: fixed;
     top: -15px;
     left: -15px;
+    padding: 15px;
     width: 100%;
     height: 100%;
     z-index: 99999999;
@@ -62,5 +68,12 @@
     border: black 1px solid;
     background-color: white;
     color: black;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    white-space: pre-wrap; /* Норма в CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox не забывает */
+    white-space: -pre-wrap; 
+}
+
+.aboutMeText {
 }

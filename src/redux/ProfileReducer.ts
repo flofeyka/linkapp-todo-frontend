@@ -1,6 +1,7 @@
+import { stat } from "fs";
 import {ProfileAPI, UsersAPI} from "../API/api";
 import {postItemType, profileDataType, profileType} from "../types/types";
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 const profileSlice = createSlice({
     name: "profile",
@@ -25,18 +26,12 @@ const profileSlice = createSlice({
                 id: state.PostItem.length + 1,
                 userId: userId,
                 fullName: fullName,
-                usersImage: currentProfileImage,
-                commentMessage: NewPostMessage,
+                usersPhoto: currentProfileImage,
+                postMessage: NewPostMessage,
                 likesCount: likesCount,
                 isLiked: isLiked,
                 answers: []
             })
-        },
-        setStatus: (state, action) => {
-            state.status = action.payload
-        },
-        setUserProfile: (state, action) => {
-            state.profileData = action.payload
         },
         answerComment: (state, action) => {
             let {id, name, image, userId, message, isLiked, likesCount} = action.payload
@@ -67,12 +62,6 @@ const profileSlice = createSlice({
                 });
             });
         },
-        setFollow: (state, action) => {
-            state.isFollowing = action.payload
-        },
-        ToggleIsFollowingProgress: (state, action) => {
-            state.followingInProgress = action.payload
-        },
         setLike: (state, action) => {
             state.PostItem.forEach(post => {
                 if (post.id === action.payload) {
@@ -83,7 +72,7 @@ const profileSlice = createSlice({
         },
         acceptCommentChanges: (state, action) => {
             state.PostItem.forEach(post => {
-                post.commentMessage = post.id === action.payload.id ? action.payload.newMessage : post.commentMessage;
+                post.postMessage = post.id === action.payload.id ? action.payload.newMessage : post.postMessage;
             });
         },
         deleteComment: (state, action) => {
@@ -102,58 +91,78 @@ const profileSlice = createSlice({
                 post.answers.splice(action.payload - 1, 1);
             });
         }
+    }, extraReducers: (builder) => {
+        builder.addCase(getProfile.fulfilled, (state, action) => {
+            state.profileData = action.payload;
+        })
+        builder.addCase(setStatusProfile.fulfilled, (state, action) => {
+            state.status = action.payload;
+        })
+        builder.addCase(getFollowingData.fulfilled, (state, action) => {
+            state.isFollowing = action.payload;
+        })
+        builder.addCase(getStatus.fulfilled, (state, action) => {
+            action.payload ? state.status = action.payload : state.status = "Статус отсутствует :)";
+        })
+        builder.addCase(Follow.pending, (state, action) => {
+            state.followingInProgress = true;
+        })
+        builder.addCase(Follow.fulfilled, (state, action) => {
+            state.isFollowing = true;
+            state.followingInProgress = false;
+        })
+        builder.addCase(unFollow.pending, (state, action) => {
+            state.followingInProgress = true;
+        })
+        builder.addCase(unFollow.fulfilled, (state, action) => {
+            state.isFollowing = false;
+            state.followingInProgress = false;
+        })
+        builder.addCase(editProfile.fulfilled, (state, action) => {
+            state.profileData = action.payload;
+        })
     }
 });
 
 export const {
-    addPost, setStatus, setUserProfile, answerComment, setLikeAnswer, setFollow, ToggleIsFollowingProgress,
+    addPost, answerComment, setLikeAnswer,
     setLike, acceptCommentChanges, deleteComment, acceptAnswerChanges, deleteAnswer
 } = profileSlice.actions;
 
-export const getStatus = (userId: number) => async (dispatch: any) => {
+export const getStatus = createAsyncThunk("profile/getStatus", async (userId: number) => {
     let Response = await ProfileAPI.getProfileStatus(userId);
-    dispatch(setStatus(Response.data));
-    if(Response.data == null) {
-        dispatch(setStatus("Статус отсутствует :)"))
-    }
+    return Response.data;
 }
+) 
+export const getProfile = createAsyncThunk('profile/getProfile', async(userId: number, ThunkAPI) => {
+    const Response = await ProfileAPI.getUserProfile(userId)
+    return Response.data;
+});
 
-export const getProfile = (userId: any) => async (dispatch: any) => {
-    const Response = await ProfileAPI.getUserProfile(userId);
-    dispatch(setUserProfile(Response.data));
-    dispatch(getStatus(userId));
-    dispatch(getFollowingData(userId));
-}
-
-export const setStatusProfile = (status: string) => async (dispatch: any) => {
+export const setStatusProfile = createAsyncThunk('profile/setStatus', async (status: string | null, ThunkAPI) => {
     const Response = await ProfileAPI.setProfileStatus(status);
-    if (Response.data.resultCode === 0) dispatch(setStatus(status));
-}
+    return Response.data
+})
 
-export const getFollowingData = (userId: number) => async (dispatch: any) => {
+export const getFollowingData = createAsyncThunk('profile/getFollowingData', async (userId: number) => {
     let Response = await ProfileAPI.getFollowingData(userId);
-    dispatch(setFollow(Response.data));
+    return Response.data;
 }
-
-export const Follow = (id: number) => async (dispatch: any) => {
-    dispatch(ToggleIsFollowingProgress(true));
+) 
+export const Follow = createAsyncThunk('profile/follow', async (id: number) => {
     let Response = await UsersAPI.follow(id);
-    if (Response.data.resultCode === 0) dispatch(setFollow(true));
-    dispatch(ToggleIsFollowingProgress(false));
-}
+    return Response.data;
+})
 
-export const unFollow = (id: number) => async (dispatch: any) => {
-    dispatch(ToggleIsFollowingProgress(true));
+export const unFollow = createAsyncThunk('profile/unfollow', async (id: number) => {
     let Response = await UsersAPI.unfollow(id);
-    if (Response.data.resultCode === 0) dispatch(setFollow(false));
-    dispatch(ToggleIsFollowingProgress(false));
-}
+    return Response.data;
+});
 
-export const editProfile = (data: object) => async (dispatch: any, getState: any) => {
-    const userId = getState().AuthPage.userId;
+export const editProfile = createAsyncThunk('profile/editProfile', async (data: any) => {
     let Response = await ProfileAPI.editProfileData(data);
-    if (Response.data.resultCode === 0) dispatch(getProfile(userId));
-}
+    return Response.data;
+})
 
 
 export default profileSlice.reducer;
