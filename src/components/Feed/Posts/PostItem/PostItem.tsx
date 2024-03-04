@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import styles from "./PostItem.module.css"
 import user from "../../../../assets/Profile/usersProfileIcon.png"
 import details from "../../../../assets/AdditionalyPhoto.png"
-import PostInterections from "../../../Profile/PostsBlock/Post/PostInterectionsBlock/PostInterections";
+
 
 function PostItem({ post, setOpenPost }: any) {
     return (
@@ -25,8 +25,6 @@ function PostItem({ post, setOpenPost }: any) {
                     setOpenPost(true);
                 }}>
                     {post.postMessage}
-                </div>
-                <div>
                 </div>
             </div>
         </div>

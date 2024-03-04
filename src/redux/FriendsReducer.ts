@@ -1,4 +1,4 @@
-import {UsersAPI} from "../API/api";
+import {followAPI, UsersAPI} from "../API/api";
 import {friendsItemType, FriendsType} from "../types/types";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
@@ -49,7 +49,7 @@ const friendsSlice = createSlice({
         })
         builder.addCase(Follow.fulfilled, (state, action) => {
             state.users.forEach((user: friendsItemType) => {
-                if (action.payload === user.id) user.followed = true
+                user.followed = action.payload === user.id && true
             })
             state.followingInProgress.splice(state.followingInProgress.indexOf(action.payload), 1)
         })
@@ -58,7 +58,7 @@ const friendsSlice = createSlice({
         })
         builder.addCase(unFollow.fulfilled, (state, action) => {
             state.users.forEach((user: friendsItemType) => {
-                if (action.payload === user.id) user.followed = false
+                user.followed = action.payload === user.id && false
             })
             state.followingInProgress.splice(state.followingInProgress.indexOf(action.payload), 1)
         })
@@ -67,19 +67,19 @@ const friendsSlice = createSlice({
 
 export const {setFollow, SetUsers, setCurrentPage, setUsersTotalCount, ToggleIsFetching, ToggleIsFollowingProgress} = friendsSlice.actions;
 
-export const getUsers = createAsyncThunk('friends/getUsers', async (currentPage: number) => {
-    let Response = await UsersAPI.getUsers(currentPage, 52);
-    let {items, totalCount} = Response.data;
+export const getUsers = createAsyncThunk('friends/getUsers', async (currentPage: number, term) => {
+    let data = await UsersAPI.getUsers(currentPage, 52);
+    let {items, totalCount} = data;
     return {items, totalCount};
 })
 
 export const Follow = createAsyncThunk("/users/follow", async (userId: number) => {
-    let Response = await UsersAPI.follow(userId);
+    let Response = await followAPI.follow(userId);
     return Response.data.id;
 });
 
 export const unFollow = createAsyncThunk("/users/unfollow", async (userId: number) => {
-    let Response = await UsersAPI.unfollow(userId)
+    let Response = await followAPI.unfollow(userId)
     return Response.data.id;
 }) 
 

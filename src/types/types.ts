@@ -129,10 +129,11 @@ export type friendsItemType = {
 }
 
 export type FriendsType = {
-    users: Array<friendsItemType>,
-    pageSize: number,
-    totalUsersCount: number,
-    currentPage: number,
-    isFetching: boolean,
+    users: Array<friendsItemType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
     followingInProgress: Array<any>
+    
 }

@@ -1,7 +1,6 @@
-import { stat } from "fs";
-import {ProfileAPI, UsersAPI} from "../API/api";
-import {postItemType, profileDataType, profileType} from "../types/types";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { ProfileAPI, followAPI } from "../API/api";
+import { postItemType, profileDataType, profileType } from "../types/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const profileSlice = createSlice({
     name: "profile",
@@ -21,7 +20,7 @@ const profileSlice = createSlice({
     } as profileType,
     reducers: {
         addPost: (state, action) => {
-            let {userId, fullName, currentProfileImage, NewPostMessage, likesCount, isLiked} = action.payload
+            let { userId, fullName, currentProfileImage, NewPostMessage, likesCount, isLiked } = action.payload
             state.PostItem.push({
                 id: state.PostItem.length + 1,
                 userId: userId,
@@ -34,7 +33,7 @@ const profileSlice = createSlice({
             })
         },
         answerComment: (state, action) => {
-            let {id, name, image, userId, message, isLiked, likesCount} = action.payload
+            let { id, name, image, userId, message, isLiked, likesCount } = action.payload
             state.PostItem.forEach(post => {
                 if (post.id === id) {
                     post.answers.push({
@@ -132,9 +131,8 @@ export const {
 export const getStatus = createAsyncThunk("profile/getStatus", async (userId: number) => {
     let Response = await ProfileAPI.getProfileStatus(userId);
     return Response.data;
-}
-) 
-export const getProfile = createAsyncThunk('profile/getProfile', async(userId: number, ThunkAPI) => {
+})
+export const getProfile = createAsyncThunk('profile/getProfile', async (userId: number) => {
     const Response = await ProfileAPI.getUserProfile(userId)
     return Response.data;
 });
@@ -148,14 +146,14 @@ export const getFollowingData = createAsyncThunk('profile/getFollowingData', asy
     let Response = await ProfileAPI.getFollowingData(userId);
     return Response.data;
 }
-) 
+)
 export const Follow = createAsyncThunk('profile/follow', async (id: number) => {
-    let Response = await UsersAPI.follow(id);
+    let Response = await followAPI.follow(id);
     return Response.data;
 })
 
 export const unFollow = createAsyncThunk('profile/unfollow', async (id: number) => {
-    let Response = await UsersAPI.unfollow(id);
+    let Response = await followAPI.unfollow(id);
     return Response.data;
 });
 

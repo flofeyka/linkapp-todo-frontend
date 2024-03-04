@@ -1,10 +1,7 @@
-import React from 'react'
 import styles from './AddNewPost.module.css'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { addPost } from "../../../../redux/ProfileReducer";
 import { addPostFeed } from "../../../../redux/FeedReducer";
-import { Field, reduxForm } from "redux-form";
-import { Textarea } from "../../../common/FormsControl/FormsControl";
 import { RootState, useAppDispatch } from "../../../../redux/ReduxStore";
 import { useFormik } from 'formik';
 import * as Yup from "yup";

@@ -1,29 +1,35 @@
 import axios from "axios";
+import { profileDataType } from "../types/types";
 
 const instance = axios.create({
     withCredentials: true, baseURL: "https://social-network.samuraijs.com/api/1.0/",
 });
 
-export const UsersAPI = {
-    getUsers(currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`);
-    }, unfollow(id : number) {
+export const followAPI = {
+    unfollow(id : number) {
         return instance.delete(`follow/${id}`);
     }, follow: (id : number) => {
         return instance.post(`follow/${id}`, {});
     }
+}
+
+export const UsersAPI = {
+    getUsers(currentPage: number = 1, pageSize: number = 10, term: string = "") {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}&term=${term}`)
+        .then(res => res.data);
+    },
 };
 
 export const ProfileAPI = {
-    getUserProfile(userId : any) {
+    getUserProfile(userId : number) {
         return instance.get(`profile/${userId}`);
-    }, getProfileStatus(userId : any) {
+    }, getProfileStatus(userId : number) {
         return instance.get(`profile/status/${userId}`);
-    }, setProfileStatus(status : any) {
+    }, setProfileStatus(status : string | null) {
         return instance.put("profile/status", {status});
-    }, getFollowingData(userId : any) {
+    }, getFollowingData(userId : number) {
         return instance.get(`follow/${userId}`);
-    }, editProfileData(data : object) {
+    }, editProfileData(data : profileDataType) {
         return instance.put("profile", data);
     }
 };

@@ -1,10 +1,10 @@
-import React, { FC, Suspense, useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import './App.css';
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { initiliazeApp } from "./redux/AppReducer";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import InitializationPage from "./components/Preloader/Initialization/InitializationPage.jsx";
-import store from "./redux/ReduxStore";
+import store, { RootState } from "./redux/ReduxStore";
 
 const Navbar = React.lazy(() => import("./components/Navbar/Navbar"));
 const Header = React.lazy(() => import("./components/Header/Header"));
@@ -21,12 +21,12 @@ const Music = React.lazy(() => import("./components/Music/Music"));
 const Settings = React.lazy(() => import("./components/Settings/Settings"));
 
 
-function App() {
-    const [initialized, isAuth]: any = useSelector((state: any) => [state.App.initialized, state.AuthPage.isAuth]);
+const App: React.FC = () => {
+    const [initialized, isAuth]: any = useSelector((state: RootState) => [state.App.initialized, state.AuthPage.isAuth]);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(initiliazeApp());
-    }, [isAuth]);
+    }, [isAuth, dispatch]);
 
     if (!initialized) {
         return <InitializationPage />
@@ -62,9 +62,6 @@ function App() {
                     <Route path='*' element={<Navigate to="/feed" />} />
                 </Routes>
             </div>
-
-
-
         </div>
     </div>
 }
