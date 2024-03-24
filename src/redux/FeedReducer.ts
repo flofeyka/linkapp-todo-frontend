@@ -11,7 +11,7 @@ const feedSlice = createSlice({
                 fullName: "Winston Smith",
                 usersPhoto: null,
                 userId: 2,
-                postMessage: "Emmanuel, give me a book pls",
+                postMessage: "Emmanuel, give me the book pls",
                 isReported: false
             }
         ] as Array<FeedPostItemType>

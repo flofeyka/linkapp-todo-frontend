@@ -39,9 +39,9 @@ const authSlice = createSlice({
 export const {setUserData, setLoginStatus, RegisterConfirm, setCurrentPhoto, setCaptchaUrl} = authSlice.actions;
 
 export const getUserData = () => async (dispatch: any) => {
-    let Response = await AuthAPI.getUsersData();
-    if (Response.data.resultCode === 0) {
-        let {id, login, email} = Response.data.data;
+    const data = await AuthAPI.getUsersData();
+    if (data.resultCode === 0) {
+        let {id, login, email} = data.data;
         dispatch(setUserData({id, login, email}));
         dispatch(setLoginStatus(true))
     }
@@ -49,16 +49,16 @@ export const getUserData = () => async (dispatch: any) => {
 
 export const getCurrentLogo = () => async (dispatch: any, getState: any) => {
     let userId = getState().AuthPage.userId;
-    let Response = await ProfileAPI.getUserProfile(userId);
-    dispatch(setCurrentPhoto(Response.data.photos));
+    let data = await ProfileAPI.getUserProfile(userId);
+    dispatch(setCurrentPhoto(data.photos));
 }
 
 export const LoginSystem = (email: string, password: string, rememberMe: boolean, captcha: string | null) => async (dispatch: any) => {
-    let Response = await AuthAPI.Login(email, password, rememberMe, captcha);
-    if (Response.data.resultCode === 0) {
+    const data = await AuthAPI.Login(email, password, rememberMe, captcha);
+    if (data.resultCode === 0) {
         await dispatch(setLoginStatus(true));
         await dispatch(getUserData());
-    } else if (Response.data.resultCode === 10) {
+    } else if (data.resultCode === 10) {
         await dispatch(getCaptchaUrl());
     }
 };
@@ -66,21 +66,21 @@ export const LoginSystem = (email: string, password: string, rememberMe: boolean
 export const setCaptcha = (url: string | null) => ({type: setCaptchaUrl, url})
 
 export const getCaptchaUrl = () => async (dispatch: any) => {
-    let Response = await SecurityAPI.getCaptcha();
-    const captchaUrl = Response.data.url;
+    const data = await SecurityAPI.getCaptcha();
+    const captchaUrl = data.url;
 
     dispatch(setCaptcha(captchaUrl));
 }
 
 export const LogOutSystem = () => async (dispatch: any) => {
-    let Response = await AuthAPI.LogOut();
-    if (Response.data.resultCode === 0) {
+    let data = await AuthAPI.LogOut();
+    if (data.resultCode === 0) {
         dispatch(setLoginStatus(false));
     }
 };
 
 export const setNewCurrentUsersPhoto = (photo: any) => async (dispatch: any) => {
-    let Response = await AuthAPI.setCurrentPhoto(photo);
-    if (Response.data.resultCode === 0) dispatch(setCurrentPhoto(Response.data.photos));
+    let data = await AuthAPI.setCurrentPhoto(photo);
+    if (data.resultCode === 0) dispatch(setCurrentPhoto(data.photos));
 }
 export default authSlice.reducer;

@@ -14,10 +14,10 @@ let state: FeedsType = {
     ],
 }
 
-it("Post in feed should be added", () => {
-    let action = addPostFeed({fullName: "Test user", usersPhoto: null, postText: "Test text", userId: 1, isReported: false});
+it("Post in feed should be added", async () => {
+    const action = addPostFeed({fullName: "Test user", usersPhoto: null, postText: "Test text", userId: 1, isReported: false});
 
-    let newState = FeedReducer(state, action);
+    const newState = FeedReducer(state, action);
     expect(newState.FeedPosts[1]).toStrictEqual({
         id: 2,
         fullName: "Test user",
@@ -28,10 +28,10 @@ it("Post in feed should be added", () => {
     });
 });
 
-it("Post in feed should be reported", () => {
-    let action = reportPost(1);
+it("Post in feed should be reported", async () => {
+    const action = reportPost(1);
 
-    let newState = FeedReducer(state, action);
+    const newState = FeedReducer(state, action);
 
     expect(newState.FeedPosts[0].isReported).toBe(true);
 });

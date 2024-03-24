@@ -52,8 +52,8 @@ it("New post should be added", () => {
         id: 2,
         userId: 5,
         fullName: "Test Name #2",
-        usersImage: null,
-        commentMessage: "Test Message #2",
+        usersPhoto: null,
+        postMessage: "Test Message #2",
         likesCount: 6542,
         isLiked: true,
         answers: []

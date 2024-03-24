@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./FollowBlock.module.css"
 import {Follow, unFollow} from "../../../../redux/ProfileReducer";
 import {useAppDispatch} from "../../../../redux/ReduxStore";
@@ -9,7 +9,7 @@ type Props = {
     isFollowing: boolean
     followingInProgress: boolean
 }
-function FollowBlock(props: Props) {
+const FollowBlock:FC<Props> = (props) => {
     const dispatch = useAppDispatch();
     return <div className={styles.followBlock}>
         {!props.isFollowing ? <button onClick={() => {

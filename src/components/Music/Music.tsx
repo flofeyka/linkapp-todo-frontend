@@ -1,7 +1,7 @@
 import React from "react";
 
 
-function Music(props) {
+function Music() {
     return <div>
             Music
         </div>

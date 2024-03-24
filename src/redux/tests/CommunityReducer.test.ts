@@ -11,7 +11,7 @@ let state : communityType = {
 };
 
 
-it("Community should be followed", () => {
+it("Community should be followed", async () => {
     let action = setFollow({id: 1, isFollowed: true});
 
     let newState = CommunityReducer(state, action);
@@ -19,7 +19,7 @@ it("Community should be followed", () => {
     expect(newState.Communities[0].isFollowed).toBe(true)
 });
 
-it("Communities should be set", () => {
+it("Communities should be set", async () => {
     let action = setCommunities([
         {
             id: 2,

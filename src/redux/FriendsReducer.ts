@@ -1,6 +1,6 @@
-import {followAPI, UsersAPI} from "../API/api";
-import {friendsItemType, FriendsType} from "../types/types";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { followAPI, UsersAPI } from "../API/api";
+import { friendsItemType, FriendsType } from "../types/types";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const friendsSlice = createSlice({
     name: "friends",
@@ -14,74 +14,79 @@ const friendsSlice = createSlice({
         followingInProgress: [] as Array<number>
     } as FriendsType,
     reducers: {
-        setFollow: (state, action) => {
-            state.users.forEach((user: any) => {
-                if(user.id === action.payload.id) {
-                    user.followed = action.payload.isFollowed;
-                }
-            });
-        },
-        SetUsers: (state, action: PayloadAction<Array<friendsItemType>>) => {
-            state.users = action.payload
-        },
         setCurrentPage: (state, action: PayloadAction<number>) => {
-            state.currentPage = action.payload
-        },
-        setUsersTotalCount: (state, action: PayloadAction<number>) => {
-            state.totalUsersCount = action.payload
+            return { ...state, currentPage: action.payload }
         },
         ToggleIsFetching: (state, action: PayloadAction<boolean>) => {
-            state.isFetching = action.payload
-        },
-        ToggleIsFollowingProgress: (state, action: PayloadAction<any>) => {
+            return { ...state, isFetching: action.payload }
         }
     }, extraReducers: (builder) => {
-        builder.addCase(getUsers.pending, (state, action: any) => {
-            state.isFetching = true;
+        builder.addCase(getUsers.pending, (state, action: PayloadAction) => {
+            return { ...state, isFetching: true }
         })
         builder.addCase(getUsers.fulfilled, (state, action) => {
-            state.users = action.payload.items;
-            state.totalUsersCount = action.payload.totalCount
-            state.isFetching = false;
+            return {
+                ...state, users: action.payload.items,
+                totalUsersCount: action.payload.totalCount,
+                isFetching: false
+            }
         })
-        builder.addCase(Follow.pending, (state, action) => {
-            state.followingInProgress.push(action.payload)
+        builder.addCase(Follow.pending, (state, action: PayloadAction) => {
+            return {
+                ...state, followingInProgress: [...state.followingInProgress, action.payload]
+            }
         })
-        builder.addCase(Follow.fulfilled, (state, action) => {
-            state.users.forEach((user: friendsItemType) => {
-                user.followed = action.payload === user.id && true
-            })
-            state.followingInProgress.splice(state.followingInProgress.indexOf(action.payload), 1)
+        builder.addCase(Follow.fulfilled, (state, action: PayloadAction<number>) => {
+            return {
+                ...state, users: [...state.users.map(user => {
+                    if (user.id === action.payload) {
+                        return { ...user, followed: true }
+                    }
+                    return user;
+                })]
+            }
         })
+        builder.addCase(Follow.rejected, (state, action) => {
+            return { ...state, followingInProgress: { ...state.followingInProgress.filter(id => id != action.payload) } }
+        });
         builder.addCase(unFollow.pending, (state, action) => {
-            state.followingInProgress.push(action.payload)
+            return {
+                ...state, followingInProgress: [...state.followingInProgress, action.payload]
+            }
         })
         builder.addCase(unFollow.fulfilled, (state, action) => {
-            state.users.forEach((user: friendsItemType) => {
-                user.followed = action.payload === user.id && false
-            })
-            state.followingInProgress.splice(state.followingInProgress.indexOf(action.payload), 1)
+            return {
+                ...state, users: [...state.users.map(user => {
+                    if (user.id === action.payload) {
+                        return { ...user, followed: true }
+                    }
+                    return user;
+                })]
+            }
         })
+        builder.addCase(unFollow.rejected, (state, action) => {
+            return { ...state, followingInProgress: { ...state.followingInProgress.filter(id => id != action.payload) } }
+        });
     }
 });
 
-export const {setFollow, SetUsers, setCurrentPage, setUsersTotalCount, ToggleIsFetching, ToggleIsFollowingProgress} = friendsSlice.actions;
+export const { setCurrentPage, ToggleIsFetching } = friendsSlice.actions;
 
 export const getUsers = createAsyncThunk('friends/getUsers', async (currentPage: number, term) => {
-    let data = await UsersAPI.getUsers(currentPage, 52);
-    let {items, totalCount} = data;
-    return {items, totalCount};
+    const data = await UsersAPI.getUsers(currentPage, 52, term);
+    const { items, totalCount } = data;
+    return { items, totalCount };
 })
 
 export const Follow = createAsyncThunk("/users/follow", async (userId: number) => {
-    let Response = await followAPI.follow(userId);
-    return Response.data.id;
+    const data = await followAPI.follow(userId);
+    return data.id;
 });
 
 export const unFollow = createAsyncThunk("/users/unfollow", async (userId: number) => {
-    let Response = await followAPI.unfollow(userId)
-    return Response.data.id;
-}) 
+    const data = await followAPI.unfollow(userId)
+    return data.id;
+})
 
 
 export default friendsSlice.reducer;

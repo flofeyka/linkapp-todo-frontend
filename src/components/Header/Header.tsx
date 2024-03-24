@@ -5,14 +5,15 @@ import logo from "../../assets/logo.png"
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {LogOutSystem} from "../../redux/AuthReducer";
+import { RootState, useAppDispatch } from "../../redux/ReduxStore";
 
 function Header() {
-    const [isAuth, login, userId] = useSelector(state => [
+    const [isAuth, login, userId] = useSelector((state: RootState) => [
         state.AuthPage.isAuth,
         state.AuthPage.login,
         state.AuthPage.userId
     ]);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return <header className={styles.header}>
         <NavLink to={"/"}>

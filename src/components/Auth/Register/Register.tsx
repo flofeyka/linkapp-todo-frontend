@@ -54,7 +54,7 @@ const Register: React.FC = () => {
                         value={formik.values.repeatPassword} onChange={formik.handleChange} />
                 </div>
                 <div>
-                    <button type="button">Зарегистрироваться</button>
+                    <button>Зарегистрироваться</button>
                 </div>
                 <div className={styles.AnAccount}>Уже есть аккаунт? <NavLink to="/login">Авторизоваться</NavLink></div>
             </div>

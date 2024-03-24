@@ -1,21 +1,25 @@
 import styles from './SearchBox.module.css'
-import { useFormik } from 'formik';
+import { Field, Form, Formik, useFormik } from 'formik';
 import { getUsers } from '../../../redux/FriendsReducer';
+import { useAppDispatch } from '../../../redux/ReduxStore';
 
-function SearchBoxFriends(props: any) {
-    let formik = useFormik({
-        initialValues: {
-            searchBoxText: ""
-        },
-        onSubmit: (values) => {
-            getUsers(props.currentPage)
-        }
-    })
+const SearchBoxFriends: React.FC = (props: any) => {
+    const dispatch = useAppDispatch();
 
     return (
         <div className={styles.SearchContainer}>
-                <input className={styles.textSearch}/>
-                <button className={styles.ButtonSearch}>Найти</button>
+            <Formik initialValues={{
+                boxSearch: ""
+            }}
+                onSubmit={(values: any) => {
+                    //@ts-ignore
+                    dispatch(getUsers(props.currentPage, values.boxSearch));
+                }}>
+                {() => <Form>
+                    <Field className={styles.textSearch} name="boxSearch" />
+                    <button className={styles.ButtonSearch} type="submit">Найти</button>
+                </Form>}
+            </Formik>
         </div>
     )
 }

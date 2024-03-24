@@ -1,16 +1,16 @@
 import DialogsReducer, {sendMessage} from "../DialogsReducer";
 import {DialogsType} from "../../types/types";
 
-let state: DialogsType = {
+const state: DialogsType = {
     Dialogs: [],
     Messages: [],
 }
 
 
-it("Message should be send", () => {
-    let action = sendMessage("WAR IS PEACE", 1, "Winston Smith", null);
+it("Message should be send", async () => {
+    const action = sendMessage("WAR IS PEACE", 1, "Winston Smith", null);
 
-    let newState = DialogsReducer(state, action);
+    const newState = DialogsReducer(state, action);
 
     expect(newState.Messages[0]).toStrictEqual({
         id: 1,

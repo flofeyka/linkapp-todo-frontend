@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { FC, memo, useState } from 'react';
 import styles from "./AnswerItem.module.css";
 import user from "../../../../../../assets/Profile/usersProfileIcon.png";
 import { acceptAnswerChanges, deleteAnswer } from "../../../../../../redux/ProfileReducer";
@@ -10,13 +10,13 @@ import details from "../../../../../../assets/AdditionalyPhoto.png"
 
 type Props = {
     answer: answersType
-    currentUserId: number
+    currentUserId: number | null
     answerMode: boolean
     postId: number
     setAnswerMode: any
 }
 
-function AnswerItem({ answer, ...props }: Props) {
+const AnswerItem: FC<Props> = ({ answer, currentUserId, answerMode, postId, setAnswerMode }) => {
     let [editMode, setEditMode] = useState(false);
     let [answerMessage, setAnswerMessage] = useState(answer.answerMessage);
     const dispatch = useDispatch();
@@ -30,15 +30,15 @@ function AnswerItem({ answer, ...props }: Props) {
             <div className={styles.fullName}>
                 {answer.answerName}
                 <span className={styles.detailsBlock}>
-                <button className={styles.details}><img src={details} /></button>
-            </span>
+                    <button className={styles.details}><img src={details} /></button>
+                </span>
             </div>
-            {editMode && props.currentUserId === answer.userId ? <div>
+            {editMode && currentUserId === answer.userId ? <div>
                 <input value={answerMessage} onChange={(event) => {
                     setAnswerMessage(event.target.value)
                 }} autoFocus={true} />
                 <button onClick={() => {
-                    dispatch(acceptAnswerChanges({ answerId: answer.id, newMessage: answerMessage, postId: props.postId }));
+                    dispatch(acceptAnswerChanges({ answerId: answer.id, newMessage: answerMessage, postId: postId }));
                     setEditMode(false)
                 }}>Принять</button>
             </div> :
@@ -47,8 +47,8 @@ function AnswerItem({ answer, ...props }: Props) {
                 </div>
             }
             <span>
-                <AnswerInterections answerMode={props.answerMode} setAnswerMode={props.setAnswerMode}
-                    answerId={answer.id} likesCount={answer.likesCount} postId={props.postId} />
+                <AnswerInterections answerMode={answerMode} setAnswerMode={setAnswerMode}
+                    answerId={answer.id} likesCount={answer.likesCount} postId={postId} />
             </span>
         </div>
     </div>

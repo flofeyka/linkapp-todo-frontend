@@ -1,20 +1,21 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./AddingNewAnswer.module.css";
 import user from "../../../../../../../assets/Profile/usersProfileIcon.png";
 import {answerComment} from "../../../../../../../redux/ProfileReducer";
 import {useDispatch} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
+import { RootState, useAppDispatch } from "../../../../../../../redux/ReduxStore";
+import { useSelector } from "react-redux";
 
-type Props = {
-    postId: number
-    currentUserId: number
-    currentFullName: string
-    currentProfileImage: string | null
-}
 
-function AddingNewAnswer(props: Props) {
-    const dispatch = useDispatch();
+const AddingNewAnswer:FC<{postId: number}> = ({postId}) => {
+    const [currentUserId, currentFullName, currentProfileImage] = useSelector((state: RootState) => [
+        state.AuthPage.userId,
+        state.AuthPage.currentUserName,
+        state.AuthPage.currentProfileImage.large
+    ])
+    const dispatch = useAppDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -25,8 +26,8 @@ function AddingNewAnswer(props: Props) {
         }),
         onSubmit: values => {
             dispatch(answerComment({
-                id: props.postId, userId: props.currentUserId, name: props.currentFullName,
-                image: props.currentProfileImage, message: values.answerMessage, likesCount: 0, isLiked: false
+                id: postId, userId: currentUserId, name: currentFullName,
+                image: currentProfileImage, message: values.answerMessage, likesCount: 0, isLiked: false
             }));
             values.answerMessage = "";
         }
@@ -36,7 +37,7 @@ function AddingNewAnswer(props: Props) {
         <div className={styles.answerBlock}>
             <span>
             <img className={styles.inputAnswerImg}
-                 src={props.currentProfileImage || user} alt=""/>
+                 src={currentProfileImage || user} alt=""/>
             </span>
             <span>
                 <input name={"answerMessage"} className={styles.inputAnswer} autoFocus={true}

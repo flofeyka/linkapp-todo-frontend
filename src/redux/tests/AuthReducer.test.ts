@@ -1,5 +1,6 @@
 import AuthReducer, {setCurrentPhoto, setUserData} from "../AuthReducer";
 import {authType} from "../../types/types";
+import { Action } from "redux";
 
 let state : authType = {
     userId: null,
@@ -16,8 +17,8 @@ let state : authType = {
 };
 
 
-it("User data should be set", () => {
-    let action = setUserData({id: 1, login: "test", email: "test@test.dev"});
+it("User data should be set", async () => {
+    let action:Action = setUserData({id: 1, login: "test", email: "test@test.dev"});
 
 
     let newState = AuthReducer(state, action);
@@ -25,7 +26,7 @@ it("User data should be set", () => {
     expect([newState.userId, newState.login, newState.email]).toStrictEqual([1, "test", "test@test.dev"]);
 });
 
-it("The picture should be stated", () => {
+it("The picture should be stated", async () => {
     let action = setCurrentPhoto({
         small: "Small photo test",
         large: "Large photo test"

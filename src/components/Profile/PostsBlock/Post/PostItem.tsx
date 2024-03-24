@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { FC, memo, useState } from 'react'
 import styles from './Post.module.css'
 import { NavLink } from "react-router-dom";
 import AnswerItem from "./PostInterectionsBlock/Answers/AnswerItem";
@@ -8,13 +8,23 @@ import { useDispatch } from "react-redux";
 import { acceptCommentChanges, deleteComment } from "../../../../redux/ProfileReducer";
 import user from "../../../../assets/Profile/usersProfileIcon.png"
 import details from "../../../../assets/AdditionalyPhoto.png"
-import { useAppDispatch } from '../../../../redux/ReduxStore';
+import { RootState, useAppDispatch } from '../../../../redux/ReduxStore';
+import { useSelector } from 'react-redux';
+import { answersType, postItemType } from '../../../../types/types';
 
 
-function PostItem({ post, setOpenPost, ...props }: any) {
+type Props = {
+    post: postItemType
+    setOpenPost: any
+    openPost: boolean
+}
+
+const PostItem: FC<Props> = ({ post, setOpenPost, openPost }) => {
+    const currentUserId = useSelector((state: RootState) => state.AuthPage.userId);
+
     const [answerMode, setAnswerMode] = useState<boolean>(false);
     const [editMode, setEditMode] = useState<boolean>(false);
-    const [newMessage, setNewMessage] = useState<string | null>(post.commentMessage);
+    const [newMessage, setNewMessage] = useState<string>(post.postMessage);
 
     return <div key={post.id}>
         <div className={styles.PostBox}>
@@ -43,19 +53,16 @@ function PostItem({ post, setOpenPost, ...props }: any) {
             </div>
         </div>
         <div>
-        <div>
-            {post.answers.map((answer: any) => {
-                return <AnswerItem setAnswerMode={(editMode: boolean) => setAnswerMode(editMode)} answerMode={answerMode}
-                    postId={post.id}
-                    answer={answer} currentUserId={props.currentUserId} />
-            })}
+            <div>
+                {post.answers.map((answer: answersType) => {
+                    return <AnswerItem currentUserId={currentUserId} setAnswerMode={(editMode: boolean) => setAnswerMode(editMode)} answerMode={answerMode}
+                        postId={post.id} answer={answer} />
+                })}
+            </div>
+            <div>
+                {answerMode && <AddingNewAnswer postId={post.id} />}
+            </div>
         </div>
-        <div>
-            {answerMode ?
-                <AddingNewAnswer currentUserId={props.currentUserId} currentProfileImage={props.currentProfileImage}
-                    currentFullName={props.currentFullName} postId={post.id} /> : null}
-        </div>
-    </div>
     </div>
 }
 

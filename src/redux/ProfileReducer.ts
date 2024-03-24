@@ -129,37 +129,30 @@ export const {
 } = profileSlice.actions;
 
 export const getStatus = createAsyncThunk("profile/getStatus", async (userId: number) => {
-    let Response = await ProfileAPI.getProfileStatus(userId);
-    return Response.data;
+    return await ProfileAPI.getProfileStatus(userId);
 })
 export const getProfile = createAsyncThunk('profile/getProfile', async (userId: number) => {
-    const Response = await ProfileAPI.getUserProfile(userId)
-    return Response.data;
+    return await ProfileAPI.getUserProfile(userId)
 });
 
-export const setStatusProfile = createAsyncThunk('profile/setStatus', async (status: string | null, ThunkAPI) => {
-    const Response = await ProfileAPI.setProfileStatus(status);
-    return Response.data
+export const setStatusProfile = createAsyncThunk('profile/setStatus', async (status: string | null) => {
+    return await ProfileAPI.setProfileStatus(status);
 })
 
 export const getFollowingData = createAsyncThunk('profile/getFollowingData', async (userId: number) => {
-    let Response = await ProfileAPI.getFollowingData(userId);
-    return Response.data;
+    return await ProfileAPI.getFollowingData(userId);
 }
 )
 export const Follow = createAsyncThunk('profile/follow', async (id: number) => {
-    let Response = await followAPI.follow(id);
-    return Response.data;
+    return await followAPI.follow(id);
 })
 
 export const unFollow = createAsyncThunk('profile/unfollow', async (id: number) => {
-    let Response = await followAPI.unfollow(id);
-    return Response.data;
+    return await followAPI.unfollow(id);
 });
 
 export const editProfile = createAsyncThunk('profile/editProfile', async (data: any) => {
-    let Response = await ProfileAPI.editProfileData(data);
-    return Response.data;
+    return await ProfileAPI.editProfileData(data);
 })
 
 
