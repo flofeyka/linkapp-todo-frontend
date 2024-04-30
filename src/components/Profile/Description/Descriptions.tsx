@@ -4,7 +4,6 @@ import user from "../../../assets/Profile/usersProfileIcon.png"
 import { getFollowingData, getProfile, getStatus, setStatusProfile } from "../../../redux/ProfileReducer";
 import FollowBlock from "./FollowBlock/Follow";
 import AboutMeBlock from "./AboutMeBlock/AboutMe";
-import { contactsType, profileDataType } from "../../../types/types";
 import { RootState, useAppDispatch } from "../../../redux/ReduxStore";
 import { useSelector } from "react-redux";
 
@@ -16,7 +15,7 @@ const Descriptions: FC<{ LinkedUserId: number }> = ({ LinkedUserId }) => {
             state.ProfilePage.isFollowing,
             state.AuthPage.userId,
             state.ProfilePage.followingInProgress,
-            state.ProfilePage.status,
+            state.ProfilePage.status
         ]);
 
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -25,9 +24,9 @@ const Descriptions: FC<{ LinkedUserId: number }> = ({ LinkedUserId }) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getStatus(LinkedUserId));
-        dispatch(getFollowingData(LinkedUserId));
-        dispatch(getProfile(LinkedUserId));
+        dispatch(getStatus(+LinkedUserId));
+        dispatch(getFollowingData(+LinkedUserId));
+        dispatch(getProfile(+LinkedUserId));
     }, [LinkedUserId, dispatch]);
 
 
@@ -46,14 +45,14 @@ const Descriptions: FC<{ LinkedUserId: number }> = ({ LinkedUserId }) => {
             </div>
             <span>
                 {!editMode ? <div onDoubleClick={() => {
-                    setEditMode(LinkedUserId === currentUserId)
+                    setEditMode(LinkedUserId === currentUserId);
                 }} className={styles.status}>
-                    {profileStatus}
+                    {status}
                 </div> : <div>
                     <input className={styles.inputStatus} onChange={event => { setStatus(event.target.value); }}
                         autoFocus={true} onBlur={() => {
                             setEditMode(false);
-                            dispatch(setStatusProfile(profileStatus));
+                            dispatch(setStatusProfile(status));
                         }} value={status}>
                     </input>
                 </div>}
