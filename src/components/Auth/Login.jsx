@@ -1,10 +1,13 @@
 import {Button, Input} from "@nextui-org/react";
 import {useForm} from "react-hook-form";
 import {NavLink} from "react-router-dom";
+import {login} from "../../redux/authSlice";
+import {useDispatch} from "react-redux";
 
 export default function Login() {
     const {register, handleSubmit} = useForm()
-    const onSubmit = (data) => console.log(data);
+    const dispatch = useDispatch();
+    const onSubmit = (data) => dispatch(login(data));
 
     return <form onSubmit={handleSubmit(onSubmit)}>
         <div className={"h-screen flex flex-col justify-center items-center bg-[aliceblue]"}>

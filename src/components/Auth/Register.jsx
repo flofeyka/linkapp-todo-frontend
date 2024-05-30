@@ -15,6 +15,6 @@ export default function Register() {
                 <Button type={"submit"} className={"my-5 font-bold"} size={"lg"} color={"primary"}>Создать аккаунт</Button>
                 <div>Уже есть аккаунт? <NavLink className={"text-primary-500 font-bold"} to={"/login"}>Войти</NavLink></div>
             </div>
-        </div>
+         </div>
     </form>
 }
